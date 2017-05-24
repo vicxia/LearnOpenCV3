@@ -712,22 +712,40 @@
                                         </connections>
                                     </button>
                                     <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ega-nA-Bvy">
-                                        <rect key="frame" x="92" y="21" width="1170" height="19"/>
+                                        <rect key="frame" x="92" y="21" width="1110" height="19"/>
                                         <sliderCell key="cell" state="on" alignment="left" maxValue="100" tickMarkPosition="above" sliderType="linear" id="hVj-4K-Fd4"/>
                                         <connections>
                                             <action selector="onSliderChange:" target="XfG-lQ-9wD" id="y3s-Le-9iY"/>
                                         </connections>
                                     </slider>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9vq-MF-p5N">
+                                        <rect key="frame" x="1246" y="21" width="14" height="19"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0" id="Qy0-zN-JNJ">
+                                            <font key="font" metaFont="system" size="15"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="ega-nA-Bvy" firstAttribute="leading" secondItem="1Jj-5n-lul" secondAttribute="trailing" constant="20" id="1fz-gz-xLh"/>
                                     <constraint firstItem="1Jj-5n-lul" firstAttribute="leading" secondItem="AJa-1K-jv3" secondAttribute="leading" constant="20" id="70H-WX-dGZ"/>
-                                    <constraint firstAttribute="trailing" secondItem="ega-nA-Bvy" secondAttribute="trailing" constant="20" id="CNw-BT-ET6"/>
+                                    <constraint firstAttribute="trailing" secondItem="ega-nA-Bvy" secondAttribute="trailing" constant="80" id="CNw-BT-ET6"/>
+                                    <constraint firstAttribute="trailing" secondItem="9vq-MF-p5N" secondAttribute="trailing" constant="22" id="Zcn-9E-vMB"/>
+                                    <constraint firstItem="9vq-MF-p5N" firstAttribute="centerY" secondItem="ega-nA-Bvy" secondAttribute="centerY" id="bgj-ax-tXD"/>
                                     <constraint firstAttribute="height" constant="60" id="ecg-V1-6Ss"/>
                                     <constraint firstItem="ega-nA-Bvy" firstAttribute="centerY" secondItem="AJa-1K-jv3" secondAttribute="centerY" id="lXS-88-qKD"/>
                                     <constraint firstItem="1Jj-5n-lul" firstAttribute="centerY" secondItem="AJa-1K-jv3" secondAttribute="centerY" id="tOi-eu-P4N"/>
                                 </constraints>
                             </customView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aXZ-KY-9LR">
+                                <rect key="frame" x="616" y="688" width="48" height="22"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="h0z-ca-qDj">
+                                    <font key="font" metaFont="system" size="18"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
                             <constraint firstItem="sXB-Y0-S4B" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="6HQ-ZR-25R"/>
@@ -735,19 +753,23 @@
                             <constraint firstAttribute="trailing" secondItem="yKf-JN-0yZ" secondAttribute="trailing" id="N3h-86-nS3"/>
                             <constraint firstItem="sXB-Y0-S4B" firstAttribute="width" secondItem="yKf-JN-0yZ" secondAttribute="width" id="NLt-XA-DTI"/>
                             <constraint firstItem="yKf-JN-0yZ" firstAttribute="leading" secondItem="sXB-Y0-S4B" secondAttribute="trailing" id="QIB-ra-cfl"/>
+                            <constraint firstItem="aXZ-KY-9LR" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="10" id="RVI-9b-9pw"/>
                             <constraint firstAttribute="bottom" secondItem="sXB-Y0-S4B" secondAttribute="bottom" id="RZl-jy-ITA"/>
                             <constraint firstItem="AJa-1K-jv3" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="cc0-ic-8ow"/>
                             <constraint firstItem="sXB-Y0-S4B" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="eyu-MN-BOK"/>
                             <constraint firstAttribute="bottom" secondItem="yKf-JN-0yZ" secondAttribute="bottom" id="oEu-0e-tSk"/>
                             <constraint firstItem="yKf-JN-0yZ" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="rnn-nV-DEO"/>
                             <constraint firstAttribute="bottom" secondItem="AJa-1K-jv3" secondAttribute="bottom" id="tGE-At-dPa"/>
+                            <constraint firstItem="aXZ-KY-9LR" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="xrt-sM-pqT"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="bottomMaskView" destination="AJa-1K-jv3" id="Cbn-zW-bWy"/>
+                        <outlet property="costLabel" destination="aXZ-KY-9LR" id="Ol2-6a-8Ex"/>
                         <outlet property="leftImgView" destination="sXB-Y0-S4B" id="Exm-bJ-b4T"/>
                         <outlet property="rightImgView" destination="yKf-JN-0yZ" id="CVu-VP-8gh"/>
                         <outlet property="slider" destination="ega-nA-Bvy" id="lIW-Zx-6qr"/>
+                        <outlet property="sliderLabel" destination="9vq-MF-p5N" id="XVn-Uh-Gb0"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

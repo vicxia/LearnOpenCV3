@@ -14,12 +14,15 @@
     cv::VideoCapture _cap;
     cv::Mat orgCvImg;
     NSInteger _frameCnt;
+    CFAbsoluteTime beginTime;
 }
 
 @property (weak) IBOutlet NSImageView *leftImgView;
 @property (weak) IBOutlet NSImageView *rightImgView;
 @property (weak) IBOutlet NSView *bottomMaskView;
 @property (weak) IBOutlet NSSlider *slider;
+@property (weak) IBOutlet NSTextField *sliderLabel;
+@property (weak) IBOutlet NSTextField *costLabel;
 
 @end
 
@@ -36,9 +39,13 @@
     cv::cvtColor(inCvImg, orgCvImg, cv::COLOR_BGR2RGB);
     //NSImage+OpenCV提供了NSImage<=>cv::Mat(RGB)的转换
     [self showLeftImage:orgCvImg];
+    
 //    self.slider.intValue = 5;
 //    [self updateBlurWithBoxSize:5];
-    [self downSample];
+//    
+//    [self downSample];
+    
+    [self cannyedgeThreshold1:10 threshold2:100];
 }
 
 - (void)viewWillAppear
@@ -79,7 +86,10 @@
 
 - (IBAction)onSliderChange:(NSSlider *)sender
 {
-    [self updateBlurWithBoxSize:sender.intValue];
+    self.sliderLabel.stringValue = [NSString stringWithFormat:@"%3d", sender.intValue];
+//    [self updateBlurWithBoxSize:sender.intValue];
+    [self cannyedgeThreshold1:10 threshold2:sender.intValue];
+    [self cannyedgeThreshold1:sender.intValue threshold2:100];
 }
 
 //blur
@@ -89,6 +99,7 @@
     if (size % 2 == 0) {
         size += 1;
     }
+    [self beginProcessImage];
     //refer: http://monkeycoding.com/?p=570
     //Could use GaussianBlur(), blur(), medianBlur() or bilateralFilter()
     cv::GaussianBlur(orgCvImg, blurMat, cv::Size(size, size), 10, 10);
@@ -96,16 +107,32 @@
     //refer:http://blog.csdn.net/poem_qianmo/article/details/23184547
 //    cv::medianBlur(orgCvImg, blurMat, size);
 //    cv::bilateralFilter(orgCvImg, blurMat, size, size * 2, size / 2);
+    [self endProcessImage];
     self.rightImgView.image = [NSImage imageWithCVMat:blurMat];
 }
 
 //down sample
 - (void)downSample
 {
+    [self beginProcessImage];
     cv::Mat outMat;
     cv::pyrDown(orgCvImg, outMat);
 //    cv::pyrDown(outMat, outMat);
+    [self endProcessImage];
     [self showRightImage:outMat];
+}
+
+- (void)cannyedgeThreshold1:(double)th1 threshold2:(double)th2
+{
+    [self beginProcessImage];
+    cv::Mat grayMat;
+    //orgCvImg is RGB format
+    cv::cvtColor(orgCvImg, grayMat, cv::COLOR_RGB2GRAY);
+    [self showLeftImage:grayMat];
+    cv::Mat cannyMat;
+    cv::Canny(grayMat, cannyMat, th1, th2, 3, true);
+    [self endProcessImage];
+    [self showRightImage:cannyMat];
 }
 
 #pragma mark - help Method
@@ -121,6 +148,17 @@
     NSImage *image = [NSImage imageWithCVMat:mat];
     NSLog(@"right image: %@", image);
     self.rightImgView.image = image;
+}
+
+- (void)beginProcessImage
+{
+    beginTime = CFAbsoluteTimeGetCurrent();
+}
+
+- (void)endProcessImage
+{
+    CFAbsoluteTime costTime = CFAbsoluteTimeGetCurrent() -beginTime;
+    self.costLabel.stringValue = [NSString stringWithFormat:@"cost: %.2f ms", costTime * 1000];
 }
 
 @end
