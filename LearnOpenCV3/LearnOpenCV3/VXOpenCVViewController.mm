@@ -35,9 +35,10 @@
     //将格式转换为RGB
     cv::cvtColor(inCvImg, orgCvImg, cv::COLOR_BGR2RGB);
     //NSImage+OpenCV提供了NSImage<=>cv::Mat(RGB)的转换
-    self.leftImgView.image = [NSImage imageWithCVMat:orgCvImg];
-    self.slider.intValue = 5;
-    [self updateBlurWithBoxSize:5];
+    [self showLeftImage:orgCvImg];
+//    self.slider.intValue = 5;
+//    [self updateBlurWithBoxSize:5];
+    [self downSample];
 }
 
 - (void)viewWillAppear
@@ -81,6 +82,7 @@
     [self updateBlurWithBoxSize:sender.intValue];
 }
 
+//blur
 - (void)updateBlurWithBoxSize:(int)size
 {
     cv::Mat blurMat;
@@ -95,6 +97,30 @@
 //    cv::medianBlur(orgCvImg, blurMat, size);
 //    cv::bilateralFilter(orgCvImg, blurMat, size, size * 2, size / 2);
     self.rightImgView.image = [NSImage imageWithCVMat:blurMat];
+}
+
+//down sample
+- (void)downSample
+{
+    cv::Mat outMat;
+    cv::pyrDown(orgCvImg, outMat);
+//    cv::pyrDown(outMat, outMat);
+    [self showRightImage:outMat];
+}
+
+#pragma mark - help Method
+- (void)showLeftImage:(cv::Mat)mat
+{
+    NSImage *image = [NSImage imageWithCVMat:mat];
+    NSLog(@"left image: %@", image);
+    self.leftImgView.image = image;
+}
+
+- (void)showRightImage:(cv::Mat)mat
+{
+    NSImage *image = [NSImage imageWithCVMat:mat];
+    NSLog(@"right image: %@", image);
+    self.rightImgView.image = image;
 }
 
 @end
