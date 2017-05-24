@@ -12,6 +12,7 @@
 
 @interface VXOpenCVViewController () {
     cv::VideoCapture _cap;
+    cv::VideoWriter _writer;
     cv::Mat orgCvImg;
     NSInteger _frameCnt;
     CFAbsoluteTime beginTime;
@@ -174,12 +175,23 @@
                 NSLog(@"open camer failed");
                 return;
             }
+            NSString *path = [NSHomeDirectory() stringByAppendingPathComponent:@"Downloads/Capture.mp4"];
+            [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+            double fps = _cap.get(cv::CAP_PROP_FPS);
+            cv::Size size((int)_cap.get(cv::CAP_PROP_FRAME_WIDTH), (int)_cap.get(cv::CAP_PROP_FRAME_HEIGHT));
+            _writer.open([path UTF8String], CV_FOURCC('M', 'J', 'P', 'G'), fps, size);
+            if (!_writer.isOpened()) {
+                NSLog(@"open file failed!");
+                return;
+            }
             sender.title = @"Stop";
         }
         
         NSInteger frameIdx = 0;
         cv::Mat frame;
         cv::Mat rgbMat;
+        cv::Mat logploarFrame;
+        
         while(true) {
             if ([sender.title isEqualToString:@"Capture"]) {
                 break;
@@ -193,9 +205,13 @@
                 self.leftImgView.image = image;
 //                self.slider.doubleValue = frameIdx * 100 / _frameCnt;
             });
-            [NSThread sleepForTimeInterval:0.033];
+            cv::logPolar(frame, logploarFrame,
+                         cv::Point2f(frame.cols / 2, frame.rows / 2),
+                         40, cv::WARP_FILL_OUTLIERS);
+            _writer.write(frame);
         }
         NSLog(@"end, readFrame count = %ld", frameIdx);
+        _writer.release();
         //crash https://github.com/opencv/opencv/issues/7833
         _cap.release();
     });
