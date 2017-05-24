@@ -45,7 +45,9 @@
 //    
 //    [self downSample];
     
-    [self cannyedgeThreshold1:10 threshold2:100];
+//    [self cannyedgeThreshold1:10 threshold2:100];
+    
+    [self downAndCannyedgeThreshold1:10 threshold2:100];
 }
 
 - (void)viewWillAppear
@@ -88,8 +90,11 @@
 {
     self.sliderLabel.stringValue = [NSString stringWithFormat:@"%3d", sender.intValue];
 //    [self updateBlurWithBoxSize:sender.intValue];
-    [self cannyedgeThreshold1:10 threshold2:sender.intValue];
-    [self cannyedgeThreshold1:sender.intValue threshold2:100];
+//    [self cannyedgeThreshold1:10 threshold2:sender.intValue];
+//    [self cannyedgeThreshold1:sender.intValue threshold2:100];
+    
+    [self downAndCannyedgeThreshold1:10 threshold2:sender.intValue];
+//    [self downAndCannyedgeThreshold1:sender.intValue threshold2:100];
 }
 
 //blur
@@ -131,6 +136,21 @@
     [self showLeftImage:grayMat];
     cv::Mat cannyMat;
     cv::Canny(grayMat, cannyMat, th1, th2, 3, true);
+    [self endProcessImage];
+    [self showRightImage:cannyMat];
+}
+
+- (void)downAndCannyedgeThreshold1:(double)th1 threshold2:(double)th2
+{
+    cv::Mat grayMat, downMat, cannyMat;
+    [self beginProcessImage];
+    cv::cvtColor(orgCvImg, grayMat, cv::COLOR_RGB2GRAY);
+    cv::pyrDown(grayMat, downMat);
+    cv::Canny(downMat, cannyMat, th1, th2, 3, true);
+    [self showLeftImage:cannyMat];
+    
+    cv::pyrDown(downMat, downMat);
+    cv::Canny(downMat, cannyMat, th1, th2, 3, true);
     [self endProcessImage];
     [self showRightImage:cannyMat];
 }
