@@ -58,36 +58,6 @@
     self.bottomMaskView.layer.backgroundColor = [NSColor colorWithWhite:0 alpha:0.3].CGColor;
 }
 
-- (IBAction)onPlayBtnTap:(NSButton *)sender
-{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSString *videoPath = [[NSBundle mainBundle] pathForResource:@"orgVideo" ofType:@"mp4"];
-        if (_cap.isOpened()){
-            _cap.set(cv::CAP_PROP_POS_FRAMES, 0);
-        } else {
-            _cap.open(std::string([videoPath UTF8String]));
-            _frameCnt = _cap.get(cv::CAP_PROP_FRAME_COUNT);
-            int tmpw = (int) _cap.get(cv::CAP_PROP_FRAME_WIDTH);
-            int tmph = (int) _cap.get(cv::CAP_PROP_FRAME_HEIGHT);
-            NSLog(@"videoCapture: frameCnt = %ld; size=(%d, %d)", _frameCnt, tmpw, tmph);
-        }
-        NSInteger frameIdx = 0;
-        cv::Mat frame;
-        while(true) {
-            _cap >> frame;
-            frameIdx ++;
-            if (frame.empty()) break;
-            NSImage *image = [NSImage imageWithCVMat:frame];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.leftImgView.image = image;
-                self.slider.doubleValue = frameIdx * 100 / _frameCnt;
-            });
-            [NSThread sleepForTimeInterval:0.045];
-        }
-        NSLog(@"end, readFrame count = %ld", frameIdx);
-    });
-}
-
 - (IBAction)onSliderChange:(NSSlider *)sender
 {
     self.sliderLabel.stringValue = [NSString stringWithFormat:@"%3d", sender.intValue];
@@ -190,6 +160,45 @@
     
     cannyMat.at<uchar>(x, y) = 128;
     [self showRightImage:cannyMat];
+}
+
+
+- (IBAction)onCaptureBtnTap:(NSButton *)sender
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        if (_cap.isOpened()) {
+            sender.title = @"Capture";
+        } else {
+            _cap.open(0);
+            if (!_cap.isOpened()){
+                NSLog(@"open camer failed");
+                return;
+            }
+            sender.title = @"Stop";
+        }
+        
+        NSInteger frameIdx = 0;
+        cv::Mat frame;
+        cv::Mat rgbMat;
+        while(true) {
+            if ([sender.title isEqualToString:@"Capture"]) {
+                break;
+            }
+            _cap >> frame;
+            frameIdx ++;
+            if (frame.empty()) break;
+            cv::cvtColor(frame, rgbMat, cv::COLOR_BGR2RGB);
+            NSImage *image = [NSImage imageWithCVMat:rgbMat];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.leftImgView.image = image;
+//                self.slider.doubleValue = frameIdx * 100 / _frameCnt;
+            });
+            [NSThread sleepForTimeInterval:0.033];
+        }
+        NSLog(@"end, readFrame count = %ld", frameIdx);
+        //crash https://github.com/opencv/opencv/issues/7833
+        _cap.release();
+    });
 }
 
 #pragma mark - help Method
