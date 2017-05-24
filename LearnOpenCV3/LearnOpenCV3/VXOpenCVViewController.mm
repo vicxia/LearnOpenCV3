@@ -12,10 +12,12 @@
 
 @interface VXOpenCVViewController () {
     cv::VideoCapture _cap;
+    cv::Mat orgCvImg;
     NSInteger _frameCnt;
 }
 
-@property (weak) IBOutlet NSImageView *imgView;
+@property (weak) IBOutlet NSImageView *leftImgView;
+@property (weak) IBOutlet NSImageView *rightImgView;
 @property (weak) IBOutlet NSView *bottomMaskView;
 @property (weak) IBOutlet NSSlider *slider;
 
@@ -30,11 +32,12 @@
     std::string imgPath = std::string([path UTF8String]);
     //读入的格式是BGR
     cv::Mat inCvImg = cv::imread(imgPath, cv::IMREAD_UNCHANGED);
-    cv::Mat outCvImg;
     //将格式转换为RGB
-    cv::cvtColor(inCvImg, outCvImg, cv::COLOR_BGR2RGB);
+    cv::cvtColor(inCvImg, orgCvImg, cv::COLOR_BGR2RGB);
     //NSImage+OpenCV提供了NSImage<=>cv::Mat(RGB)的转换
-    self.imgView.image = [NSImage imageWithCVMat:outCvImg];
+    self.leftImgView.image = [NSImage imageWithCVMat:orgCvImg];
+    self.slider.intValue = 5;
+    [self updateBlurWithBoxSize:5];
 }
 
 - (void)viewWillAppear
@@ -64,7 +67,7 @@
             if (frame.empty()) break;
             NSImage *image = [NSImage imageWithCVMat:frame];
             dispatch_async(dispatch_get_main_queue(), ^{
-                self.imgView.image = image;
+                self.leftImgView.image = image;
                 self.slider.doubleValue = frameIdx * 100 / _frameCnt;
             });
             [NSThread sleepForTimeInterval:0.045];
@@ -75,7 +78,23 @@
 
 - (IBAction)onSliderChange:(NSSlider *)sender
 {
-    
+    [self updateBlurWithBoxSize:sender.intValue];
+}
+
+- (void)updateBlurWithBoxSize:(int)size
+{
+    cv::Mat blurMat;
+    if (size % 2 == 0) {
+        size += 1;
+    }
+    //refer: http://monkeycoding.com/?p=570
+    //Could use GaussianBlur(), blur(), medianBlur() or bilateralFilter()
+    cv::GaussianBlur(orgCvImg, blurMat, cv::Size(size, size), 10, 10);
+//    cv::blur(orgCvImg, blurMat, cv::Size(size, size));
+    //refer:http://blog.csdn.net/poem_qianmo/article/details/23184547
+//    cv::medianBlur(orgCvImg, blurMat, size);
+//    cv::bilateralFilter(orgCvImg, blurMat, size, size * 2, size / 2);
+    self.rightImgView.image = [NSImage imageWithCVMat:blurMat];
 }
 
 @end

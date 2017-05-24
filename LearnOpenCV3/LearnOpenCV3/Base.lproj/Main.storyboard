@@ -684,12 +684,19 @@
                 <viewController id="XfG-lQ-9wD" customClass="VXOpenCVViewController" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
                         <rect key="frame" x="0.0" y="0.0" width="1280" height="720"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sXB-Y0-S4B">
-                                <rect key="frame" x="0.0" y="0.0" width="1280" height="720"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sXB-Y0-S4B">
+                                <rect key="frame" x="0.0" y="0.0" width="640" height="720"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="720" id="D3N-Cf-JDU"/>
+                                    <constraint firstAttribute="width" constant="640" id="EhM-sk-5k6"/>
+                                </constraints>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="gHI-Cx-qeb"/>
+                            </imageView>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yKf-JN-0yZ">
+                                <rect key="frame" x="640" y="0.0" width="640" height="720"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="7dg-SA-hKl"/>
                             </imageView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="AJa-1K-jv3">
                                 <rect key="frame" x="0.0" y="0.0" width="1280" height="60"/>
@@ -723,20 +730,29 @@
                             </customView>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="sXB-Y0-S4B" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="6HQ-ZR-25R"/>
                             <constraint firstAttribute="trailing" secondItem="AJa-1K-jv3" secondAttribute="trailing" id="F0u-nD-koW"/>
+                            <constraint firstAttribute="trailing" secondItem="yKf-JN-0yZ" secondAttribute="trailing" id="N3h-86-nS3"/>
+                            <constraint firstItem="sXB-Y0-S4B" firstAttribute="width" secondItem="yKf-JN-0yZ" secondAttribute="width" id="NLt-XA-DTI"/>
+                            <constraint firstItem="yKf-JN-0yZ" firstAttribute="leading" secondItem="sXB-Y0-S4B" secondAttribute="trailing" id="QIB-ra-cfl"/>
+                            <constraint firstAttribute="bottom" secondItem="sXB-Y0-S4B" secondAttribute="bottom" id="RZl-jy-ITA"/>
                             <constraint firstItem="AJa-1K-jv3" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="cc0-ic-8ow"/>
+                            <constraint firstItem="sXB-Y0-S4B" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="eyu-MN-BOK"/>
+                            <constraint firstAttribute="bottom" secondItem="yKf-JN-0yZ" secondAttribute="bottom" id="oEu-0e-tSk"/>
+                            <constraint firstItem="yKf-JN-0yZ" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="rnn-nV-DEO"/>
                             <constraint firstAttribute="bottom" secondItem="AJa-1K-jv3" secondAttribute="bottom" id="tGE-At-dPa"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="bottomMaskView" destination="AJa-1K-jv3" id="Cbn-zW-bWy"/>
-                        <outlet property="imgView" destination="sXB-Y0-S4B" id="n9h-EC-IBj"/>
+                        <outlet property="leftImgView" destination="sXB-Y0-S4B" id="Exm-bJ-b4T"/>
+                        <outlet property="rightImgView" destination="yKf-JN-0yZ" id="CVu-VP-8gh"/>
                         <outlet property="slider" destination="ega-nA-Bvy" id="lIW-Zx-6qr"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1344" y="269"/>
+            <point key="canvasLocation" x="1544" y="245"/>
         </scene>
     </scenes>
 </document>
