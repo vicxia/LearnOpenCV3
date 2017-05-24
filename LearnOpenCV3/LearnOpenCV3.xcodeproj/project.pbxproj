@@ -17,6 +17,9 @@
 		1C01065C1ED551C800DF6B61 /* libopencv_imgproc.3.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C01065B1ED551C800DF6B61 /* libopencv_imgproc.3.2.0.dylib */; };
 		1C01065E1ED551CE00DF6B61 /* libopencv_imgcodecs.3.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C01065D1ED551CE00DF6B61 /* libopencv_imgcodecs.3.2.0.dylib */; };
 		1C0106611ED5520300DF6B61 /* orgImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1C0106601ED5520300DF6B61 /* orgImage.jpg */; };
+		1C0106631ED5610900DF6B61 /* orgVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 1C0106621ED560F000DF6B61 /* orgVideo.mp4 */; };
+		1C01068C1ED5756400DF6B61 /* libopencv_video.3.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C01068B1ED5756400DF6B61 /* libopencv_video.3.2.0.dylib */; };
+		1C01068E1ED5756C00DF6B61 /* libopencv_videoio.3.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C01068D1ED5756C00DF6B61 /* libopencv_videoio.3.2.0.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +38,9 @@
 		1C01065B1ED551C800DF6B61 /* libopencv_imgproc.3.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libopencv_imgproc.3.2.0.dylib; sourceTree = "<group>"; };
 		1C01065D1ED551CE00DF6B61 /* libopencv_imgcodecs.3.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libopencv_imgcodecs.3.2.0.dylib; sourceTree = "<group>"; };
 		1C0106601ED5520300DF6B61 /* orgImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = orgImage.jpg; sourceTree = "<group>"; };
+		1C0106621ED560F000DF6B61 /* orgVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = orgVideo.mp4; sourceTree = "<group>"; };
+		1C01068B1ED5756400DF6B61 /* libopencv_video.3.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libopencv_video.3.2.0.dylib; sourceTree = "<group>"; };
+		1C01068D1ED5756C00DF6B61 /* libopencv_videoio.3.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libopencv_videoio.3.2.0.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +48,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C01068C1ED5756400DF6B61 /* libopencv_video.3.2.0.dylib in Frameworks */,
+				1C01068E1ED5756C00DF6B61 /* libopencv_videoio.3.2.0.dylib in Frameworks */,
 				1C01065C1ED551C800DF6B61 /* libopencv_imgproc.3.2.0.dylib in Frameworks */,
 				1C01065E1ED551CE00DF6B61 /* libopencv_imgcodecs.3.2.0.dylib in Frameworks */,
 				1C0106541ED535F000DF6B61 /* libopencv_core.3.2.0.dylib in Frameworks */,
@@ -78,8 +86,8 @@
 				1C01063C1ED5310A00DF6B61 /* AppDelegate.m */,
 				1C0106581ED5511B00DF6B61 /* VXOpenCVViewController.h */,
 				1C0106591ED5511B00DF6B61 /* VXOpenCVViewController.mm */,
-				1C0106441ED5310A00DF6B61 /* Assets.xcassets */,
 				1C0106461ED5310A00DF6B61 /* Main.storyboard */,
+				1C0106441ED5310A00DF6B61 /* Assets.xcassets */,
 				1C0106491ED5310A00DF6B61 /* Info.plist */,
 				1C01063E1ED5310A00DF6B61 /* Supporting Files */,
 			);
@@ -97,6 +105,8 @@
 		1C0106521ED5324100DF6B61 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				1C01068D1ED5756C00DF6B61 /* libopencv_videoio.3.2.0.dylib */,
+				1C01068B1ED5756400DF6B61 /* libopencv_video.3.2.0.dylib */,
 				1C01065B1ED551C800DF6B61 /* libopencv_imgproc.3.2.0.dylib */,
 				1C01065D1ED551CE00DF6B61 /* libopencv_imgcodecs.3.2.0.dylib */,
 				1C0106531ED535F000DF6B61 /* libopencv_core.3.2.0.dylib */,
@@ -107,6 +117,7 @@
 		1C01065F1ED551EE00DF6B61 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1C0106621ED560F000DF6B61 /* orgVideo.mp4 */,
 				1C0106601ED5520300DF6B61 /* orgImage.jpg */,
 			);
 			path = Resources;
@@ -171,6 +182,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C0106631ED5610900DF6B61 /* orgVideo.mp4 in Resources */,
 				1C0106451ED5310A00DF6B61 /* Assets.xcassets in Resources */,
 				1C0106481ED5310A00DF6B61 /* Main.storyboard in Resources */,
 				1C0106611ED5520300DF6B61 /* orgImage.jpg in Resources */,

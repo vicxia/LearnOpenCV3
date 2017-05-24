@@ -691,15 +691,52 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="gHI-Cx-qeb"/>
                             </imageView>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="AJa-1K-jv3">
+                                <rect key="frame" x="0.0" y="0.0" width="1280" height="60"/>
+                                <subviews>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1Jj-5n-lul">
+                                        <rect key="frame" x="14" y="13" width="66" height="32"/>
+                                        <buttonCell key="cell" type="push" title="Play" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="RYb-Zr-OB1">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onPlayBtnTap:" target="XfG-lQ-9wD" id="NIn-ax-J9G"/>
+                                        </connections>
+                                    </button>
+                                    <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ega-nA-Bvy">
+                                        <rect key="frame" x="92" y="21" width="1170" height="19"/>
+                                        <sliderCell key="cell" state="on" alignment="left" maxValue="100" tickMarkPosition="above" sliderType="linear" id="hVj-4K-Fd4"/>
+                                        <connections>
+                                            <action selector="onSliderChange:" target="XfG-lQ-9wD" id="y3s-Le-9iY"/>
+                                        </connections>
+                                    </slider>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="ega-nA-Bvy" firstAttribute="leading" secondItem="1Jj-5n-lul" secondAttribute="trailing" constant="20" id="1fz-gz-xLh"/>
+                                    <constraint firstItem="1Jj-5n-lul" firstAttribute="leading" secondItem="AJa-1K-jv3" secondAttribute="leading" constant="20" id="70H-WX-dGZ"/>
+                                    <constraint firstAttribute="trailing" secondItem="ega-nA-Bvy" secondAttribute="trailing" constant="20" id="CNw-BT-ET6"/>
+                                    <constraint firstAttribute="height" constant="60" id="ecg-V1-6Ss"/>
+                                    <constraint firstItem="ega-nA-Bvy" firstAttribute="centerY" secondItem="AJa-1K-jv3" secondAttribute="centerY" id="lXS-88-qKD"/>
+                                    <constraint firstItem="1Jj-5n-lul" firstAttribute="centerY" secondItem="AJa-1K-jv3" secondAttribute="centerY" id="tOi-eu-P4N"/>
+                                </constraints>
+                            </customView>
                         </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="AJa-1K-jv3" secondAttribute="trailing" id="F0u-nD-koW"/>
+                            <constraint firstItem="AJa-1K-jv3" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="cc0-ic-8ow"/>
+                            <constraint firstAttribute="bottom" secondItem="AJa-1K-jv3" secondAttribute="bottom" id="tGE-At-dPa"/>
+                        </constraints>
                     </view>
                     <connections>
+                        <outlet property="bottomMaskView" destination="AJa-1K-jv3" id="Cbn-zW-bWy"/>
                         <outlet property="imgView" destination="sXB-Y0-S4B" id="n9h-EC-IBj"/>
+                        <outlet property="slider" destination="ega-nA-Bvy" id="lIW-Zx-6qr"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1327" y="268"/>
+            <point key="canvasLocation" x="1344" y="269"/>
         </scene>
     </scenes>
 </document>
