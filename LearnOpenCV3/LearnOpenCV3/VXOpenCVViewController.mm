@@ -47,7 +47,9 @@
     
 //    [self cannyedgeThreshold1:10 threshold2:100];
     
-    [self downAndCannyedgeThreshold1:10 threshold2:100];
+//    [self downAndCannyedgeThreshold1:10 threshold2:100];
+    
+    [self motifyPixels];
 }
 
 - (void)viewWillAppear
@@ -152,6 +154,41 @@
     cv::pyrDown(downMat, downMat);
     cv::Canny(downMat, cannyMat, th1, th2, 3, true);
     [self endProcessImage];
+    [self showRightImage:cannyMat];
+}
+
+- (void)motifyPixels
+{
+    cv::Mat grayMat, downMat, cannyMat;
+    cv::cvtColor(orgCvImg, grayMat, cv::COLOR_RGB2GRAY);
+    cv::pyrDown(grayMat, downMat);
+    cv::pyrDown(downMat, downMat);
+    cv::Canny(downMat, cannyMat, 10, 100, 3, true);
+    
+    int x = 16, y = 32;
+    cv::Vec3b intensity = orgCvImg.at<cv::Vec3b>(y, x);
+    
+    // ( Note: We could write img_rgb.at< cv::Vec3b >(x,y)[0] )
+    //
+    uchar blue  = intensity[0];
+    uchar green = intensity[1];
+    uchar red   = intensity[2];
+    
+    std::cout << "At (x,y) = (" << x << ", " << y <<
+    "): (blue, green, red) = (" <<
+    (unsigned int)  blue <<
+    ", " << (unsigned int)green << ", " <<
+    (unsigned int)  red << ")" << std::endl;
+    
+    std::cout << "Gray pixel there is: " <<
+    (unsigned int)  grayMat.at<uchar>(y, x) << std::endl;
+    
+    x /= 4; y /= 4;
+    
+    std::cout << "Pyramid2 pixel there is: " <<
+    (unsigned int)downMat.at<uchar>(y, x) << std::endl;
+    
+    cannyMat.at<uchar>(x, y) = 128;
     [self showRightImage:cannyMat];
 }
 
